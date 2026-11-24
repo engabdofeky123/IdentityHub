@@ -16,19 +16,20 @@ namespace IdentityHub
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Add services to the container.
             builder.Services.AddControllers();
 
+
+            builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
-            builder.Services.Configure<FrontendOptions>(builder.Configuration.GetSection("Frontend"));
+            builder.Services.Configure<FrontendOptions>(builder.Configuration.GetSection("FrontendOptions"));
 
             builder.Services.AddDbContext<AppDbContext>
                 (x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = true;

@@ -2,6 +2,7 @@
 using IdentityHub.Interfaces;
 using IdentityHub.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 
 namespace IdentityHub.Services
 {
@@ -13,12 +14,12 @@ namespace IdentityHub.Services
         private readonly FrontendOptions _frontendOptions;
 
         public AccountService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, 
-            IEmailService emailService, FrontendOptions frontendOptions)
+            IEmailService emailService, IOptions<FrontendOptions> frontendOptions)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _emailService = emailService;
-            _frontendOptions = frontendOptions;
+            _frontendOptions = frontendOptions.Value;
         }
 
         public async Task<bool> ConfirmEmailAsync(string userId, string token)
